@@ -7,8 +7,8 @@ const bot = new Discord.Client();
 bot.commands = new Enmap();
 
 const config = {
-    token: 'ODE5ODg3Mzg0NTgwNTg3NTUx.YEtJoQ.hF50N8aVQgX1jGyCj4T9Uayrb98',//process.env.BOT_TOKEN,
-    prefix: '%'//process.env.PREFIX
+    token: process.env.BOT_TOKEN,
+    prefix: process.env.PREFIX
 };
 
 module.exports = { config };
