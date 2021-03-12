@@ -26,5 +26,8 @@
     "ytdl": "^1.4.1",
     "ytdl-core": "^4.5.0",
     "ytdl-core-discord": "^1.2.5"
+  },
+  "devDependencies": {
+    "@types/yt-search": "^2.3.0"
   }
 }
