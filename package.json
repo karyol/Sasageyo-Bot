@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/karyol/Sasageyo-Bot#readme",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "enmap": "^5.8.4"
   }
 }
