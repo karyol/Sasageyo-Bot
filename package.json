@@ -18,6 +18,8 @@
   "homepage": "https://github.com/karyol/Sasageyo-Bot#readme",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "enmap": "^5.8.4"
+    "enmap": "^5.8.4",
+    "ytdl": "^1.4.1",
+    "ytdl-core": "^4.5.0"
   }
 }

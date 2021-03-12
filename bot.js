@@ -13,11 +13,15 @@ const config = {
 
 module.exports = { config };
 
-fs.copyFile('./commands/help.js', './commands/h.js', (err) => {
+fs.copyFile('./commands/help.js', './commands/h.js', async (err) => {
     if (err) throw err;
 });
 
-fs.copyFile('./commands/play.js', './commands/p.js', (err) => {
+fs.copyFile('./commands/play.js', './commands/p.js', async (err) => {
+    if (err) throw err;
+});
+
+fs.copyFile('./commands/disconnect.js', './commands/d.js', async (err) => {
     if (err) throw err;
 });
 
