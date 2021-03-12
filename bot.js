@@ -25,6 +25,14 @@ fs.copyFile('./commands/disconnect.js', './commands/d.js', async (err) => {
     if (err) throw err;
 });
 
+fs.copyFile('./commands/skip.js', './commands/s.js', async (err) => {
+    if (err) throw err;
+});
+
+fs.copyFile('./commands/queue.js', './commands/q.js', async (err) => {
+    if (err) throw err;
+});
+
 fs.readdir('./events', async (err, files) => {
     if(err) return console.error;
     files.forEach(file => {

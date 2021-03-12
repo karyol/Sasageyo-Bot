@@ -28,9 +28,9 @@ var commsString = '';
 comms.push(
     {name: `${this.help.name}`, description: `${this.help.description}`},
     {name: `${play.help.name}`, description: `${play.help.description}`},
-    {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
     {name: `${skip.help.name}`, description: `${skip.help.description}`},
-    {name: `${stop.help.name}`, description: `${stop.help.description}`}
+    {name: `${stop.help.name}`, description: `${stop.help.description}`},
+    {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
 );
 
 comms.forEach(obj => {

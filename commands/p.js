@@ -67,6 +67,37 @@ exports.stop = (message) => {
     serverQueue.connection.dispatcher.end();
 }
 
+exports.queue = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to check queue!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("Queue is empty.")
+    }
+
+    var queueString = '';
+    var i = 1;
+
+    serverQueue.songs.forEach(song => {
+        queueString += `${i}. ${song.title}\n`;
+        i++;
+    });
+
+    const queueMessage = new Discord.MessageEmbed()
+        .setColor('#990000')
+        .setTitle('Queue')
+        .setDescription(queueString);
+
+    return message.channel.send(queueMessage);
+}
+
 exports.run = async (bot, message, args) => {
     const voiceChannel = message.member.voice.channel;
     if(!voiceChannel)
@@ -122,7 +153,6 @@ exports.run = async (bot, message, args) => {
     else
     {
         serverQueue.songs.push(song);
-        console.log(serverQueue.songs);
         return message.channel.send(`${song.title} has been added to the queue!`);
     }
 };
