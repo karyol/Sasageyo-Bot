@@ -108,7 +108,34 @@ exports.queue = (message) => {
 }
 
 exports.randomize = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to randomize queue!"
+        );
+    }
 
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("Queue is empty.")
+    }
+
+    var i = 0;
+    var randomInt, temp;
+
+    serverQueue.songs.forEach(song => {
+        if(i > 0)
+        {
+            randomInt = Math.floor(Math.random() * (serverQueue.songs.length - 2)) + 1;
+            serverQueue.songs[i] = serverQueue.songs[randomInt];
+            serverQueue.songs[randomInt] = song;
+        }
+        i++;
+    });
+
+    this.queue(message);
 };
 
 exports.remove = (message, args) => {
