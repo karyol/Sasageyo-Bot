@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 exports.help = {
     name: 'play',
@@ -7,6 +7,28 @@ exports.help = {
 };
 
 const queue = new Map();
+
+async function play(guild, song)
+{
+    const serverQueue = queue.get(guild.id);
+    if(!song)
+    {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+    }
+
+    const dispatcher = serverQueue.connection
+        .play(await ytdl(song.url), { type: 'opus' })
+        .on("finish", () => {
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        })
+        .on("error", error => console.error(error));
+
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    serverQueue.textChannel.send(`Now playing: **${song.title}**`);
+}
 
 exports.run = async (bot, message, args) => {
     const voiceChannel = message.member.voice.channel;
@@ -30,7 +52,7 @@ exports.run = async (bot, message, args) => {
     const songInfo = await ytdl.getInfo(args[0]);
     const song = {
         title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url
+        url: songInfo.videoDetails.video_url,
     };
 
     if(!serverQueue)
@@ -51,9 +73,9 @@ exports.run = async (bot, message, args) => {
         {
             var connection = await voiceChannel.join();
             queueContruct.connection = connection;
-            //play(message.guild, queueContruct.songs[0]);
+            play(message.guild, queueContruct.songs[0]);
         }
-        catch (error)
+        catch(err)
         {
             console.log(err);
             queue.delete(message.guild.id);
