@@ -7,6 +7,13 @@ exports.help = {
 };
 
 exports.run = (bot, message, args) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to search for a song!"
+        );
+    }
+
     search(args.join(' '), (err, res) => {
         if (err) return message.channel.send('Something went wrong.');
 
