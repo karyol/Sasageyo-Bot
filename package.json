@@ -1,0 +1,22 @@
+{
+  "name": "sasageyo-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karyol/Sasageyo-Bot.git"
+  },
+  "author": "Baron Drakula",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karyol/Sasageyo-Bot/issues"
+  },
+  "homepage": "https://github.com/karyol/Sasageyo-Bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
