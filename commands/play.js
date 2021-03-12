@@ -93,7 +93,7 @@ exports.queue = (message) => {
         }
         else
         {
-            queueString += `Now playing: ${song.title}\n`;
+            queueString += `Now playing: **${song.title}**\n`;
             queueString += '--------------------------------------------------------------------------------------------\n'
         }
         i++;

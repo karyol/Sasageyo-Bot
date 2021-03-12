@@ -7,6 +7,7 @@ const skip = require('./skip.js');
 const stop = require('./stop.js');
 const queue = require('./queue.js');
 const remove = require('./remove.js');
+const search = require('./search.js');
 
 exports.help = {
     name: 'help',
@@ -34,6 +35,7 @@ comms.push(
     {name: `${stop.help.name}`, description: `${stop.help.description}`},
     {name: `${queue.help.name}`, description: `${queue.help.description}`},
     {name: `${remove.help.name}`, description: `${remove.help.description}`},
+    {name: `${search.help.name}`, description: `${search.help.description}`},
     {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
 );
 
