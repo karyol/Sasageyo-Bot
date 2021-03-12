@@ -13,26 +13,6 @@ const config = {
 
 module.exports = { config };
 
-fs.copyFile('./commands/help.js', './commands/h.js', async (err) => {
-    if (err) throw err;
-});
-
-fs.copyFile('./commands/play.js', './commands/p.js', async (err) => {
-    if (err) throw err;
-});
-
-fs.copyFile('./commands/disconnect.js', './commands/d.js', async (err) => {
-    if (err) throw err;
-});
-
-fs.copyFile('./commands/skip.js', './commands/s.js', async (err) => {
-    if (err) throw err;
-});
-
-fs.copyFile('./commands/queue.js', './commands/q.js', async (err) => {
-    if (err) throw err;
-});
-
 fs.readdir('./events', async (err, files) => {
     if(err) return console.error;
     files.forEach(file => {

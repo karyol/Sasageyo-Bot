@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core-discord');
+const yts = require('yt-search');
 
 exports.help = {
     name: 'play',
@@ -83,10 +84,18 @@ exports.queue = (message) => {
     }
 
     var queueString = '';
-    var i = 1;
+    var i = 0;
 
     serverQueue.songs.forEach(song => {
-        queueString += `${i}. ${song.title}\n`;
+        if(i > 0)
+        {
+            queueString += `${i}. ${song.title}\n`;
+        }
+        else
+        {
+            queueString += `Now playing: ${song.title}\n`;
+            queueString += '--------------------------------------------------------------------------------------------\n'
+        }
         i++;
     });
 
@@ -97,6 +106,31 @@ exports.queue = (message) => {
 
     return message.channel.send(queueMessage);
 }
+
+exports.remove = (message, args) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to remove song from queue!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("Queue is empty.")
+    }
+
+    if(args[0] < serverQueue.songs.length && args[0] > 0)
+    {
+        var tempTitle = serverQueue.songs[args[0]].title;
+        serverQueue.songs.splice(args[0], 1);
+        return message.channel.send(
+            `Removed song ${args[0]}. ${tempTitle}`
+        );
+    }
+};
 
 exports.run = async (bot, message, args) => {
     const voiceChannel = message.member.voice.channel;
@@ -116,13 +150,26 @@ exports.run = async (bot, message, args) => {
     }
 
     const serverQueue = queue.get(message.guild.id);
+    var song;
 
-    const songInfo = await ytdl.getInfo(args[0]);
-    const song = {
-        title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url,
-    };
-
+    if(ytdl.validateURL(args[0]))
+    {
+        const songInfo = await ytdl.getInfo(args[0]);
+        song = {
+            title: songInfo.videoDetails.title,
+            url: songInfo.videoDetails.video_url,
+        };
+    }
+    else
+    {
+        const {videos} = await yts(args.slice(0).join(" "));
+        if(!videos.length) return message.channel.send("Song not found!");
+        song = {
+            title: videos[0].title,
+            url: videos[0].url,
+        };
+    }
+    
     if(!serverQueue)
     {
         const queueContruct = {

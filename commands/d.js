@@ -1,14 +1,11 @@
 const Discord = require('discord.js');
 
 exports.help = {
-    name: 'disconnect',
+    name: 'd',
     description: 'disconnect bot from voice channel'
 };
 
-exports.run = (bot, message, args) => {
-    if(!message.guild.me.voice.channel)
-    {
-        return message.channel.send("I'm not on a voice channel");
-    }
-    message.guild.me.voice.channel.leave();
+exports.run = async (bot, message, args) => {
+    const command = bot.commands.get('disconnect');
+    command.run(bot, message, args);
 };
