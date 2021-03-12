@@ -13,6 +13,14 @@ const config = {
 
 module.exports = { config };
 
+fs.copyFile('./commands/help.js', './commands/h.js', (err) => {
+    if (err) throw err;
+});
+
+fs.copyFile('./commands/play.js', './commands/p.js', (err) => {
+    if (err) throw err;
+});
+
 fs.readdir('./events', async (err, files) => {
     if(err) return console.error;
     files.forEach(file => {
