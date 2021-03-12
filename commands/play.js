@@ -107,6 +107,10 @@ exports.queue = (message) => {
     return message.channel.send(queueMessage);
 }
 
+exports.randomize = (message) => {
+
+};
+
 exports.remove = (message, args) => {
     if(!message.member.voice.channel)
     {
