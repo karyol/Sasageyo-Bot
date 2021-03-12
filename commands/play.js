@@ -21,15 +21,116 @@ async function play(guild, song)
 
     const dispatcher = serverQueue.connection
         .play(await ytdl(song.url), { type: 'opus' })
-        .on("finish", () => {
+        .on("error", error => console.error(error));
+
+    if(!serverQueue.loop && !serverQueue.random)
+    {
+        dispatcher.on("finish", () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
-        })
-        .on("error", error => console.error(error));
+        });
+    }
+    else if(serverQueue.loop && !serverQueue.random)
+    {
+        dispatcher.on("finish", () => {
+            serverQueue.songs.push(song);
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        });
+    }
+    else if(!serverQueue.loop && serverQueue.random)
+    {
+        dispatcher.on("finish", () => {
+            var i = 0;
+            var randomInt, temp;
+
+            serverQueue.songs.forEach(song => {
+                if(i > 0)
+                {
+                    randomInt = Math.floor(Math.random() * (serverQueue.songs.length - 2)) + 1;
+                    serverQueue.songs[i] = serverQueue.songs[randomInt];
+                    serverQueue.songs[randomInt] = song;
+                }
+                i++;
+            });
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        });
+    }
+    else
+    {
+        dispatcher.on("finish", () => {
+            var i = 0;
+            var randomInt, temp;
+
+            serverQueue.songs.forEach(song => {
+                if(i > 0)
+                {
+                    randomInt = Math.floor(Math.random() * (serverQueue.songs.length - 2)) + 1;
+                    serverQueue.songs[i] = serverQueue.songs[randomInt];
+                    serverQueue.songs[randomInt] = song;
+                }
+                i++;
+            });
+            serverQueue.songs.push(song);
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        });
+    }
 
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`Now playing: **${song.title}**`);
 }
+
+exports.loop = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to loop queue!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("Queue is empty.");
+    }
+
+    if(!serverQueue.loop)
+    {
+        serverQueue.loop = true;
+    }
+    else
+    {
+        serverQueue.loop = false;
+    }
+};
+
+exports.random = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to randomize queue!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("Queue is empty.");
+    }
+
+    if(!serverQueue.random)
+    {
+        serverQueue.random = true;
+    }
+    else
+    {
+        serverQueue.random = false;
+    }
+};
 
 exports.skip = (message) => {
     if(!message.member.voice.channel)
@@ -43,7 +144,7 @@ exports.skip = (message) => {
 
     if(!serverQueue)
     {
-        return message.channel.send("There is no song to skip.")
+        return message.channel.send("There is no song to skip.");
     }
 
     serverQueue.connection.dispatcher.end();
@@ -209,7 +310,9 @@ exports.run = async (bot, message, args) => {
             connection: null,
             songs: [],
             volume: 5,
-            playing: true
+            playing: true,
+            loop: false,
+            random: false
         };
 
         queue.set(message.guild.id, queueContruct);
