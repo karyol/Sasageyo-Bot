@@ -3,6 +3,8 @@ const fs = require('fs');
 const { config } = require('../bot');
 const play = require('./play.js');
 const disconnect = require('./disconnect.js');
+const skip = require('./skip.js');
+const stop = require('./stop.js');
 
 exports.help = {
     name: 'help',
@@ -26,7 +28,9 @@ var commsString = '';
 comms.push(
     {name: `${this.help.name}`, description: `${this.help.description}`},
     {name: `${play.help.name}`, description: `${play.help.description}`},
-    {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`}
+    {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
+    {name: `${skip.help.name}`, description: `${skip.help.description}`},
+    {name: `${stop.help.name}`, description: `${stop.help.description}`}
 );
 
 comms.forEach(obj => {

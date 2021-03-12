@@ -30,6 +30,43 @@ async function play(guild, song)
     serverQueue.textChannel.send(`Now playing: **${song.title}**`);
 }
 
+exports.skip = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to skip song!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("There is no song to skip.")
+    }
+
+    serverQueue.connection.dispatcher.end();
+};
+
+exports.stop = (message) => {
+    if(!message.member.voice.channel)
+    {
+        return message.channel.send(
+            "You need to be in a voice channel to skip song!"
+        );
+    }
+
+    const serverQueue = queue.get(message.guild.id);
+
+    if(!serverQueue)
+    {
+        return message.channel.send("There is no song to stop.")
+    }
+
+    serverQueue.songs = [];
+    serverQueue.connection.dispatcher.end();
+}
+
 exports.run = async (bot, message, args) => {
     const voiceChannel = message.member.voice.channel;
     if(!voiceChannel)
