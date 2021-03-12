@@ -105,6 +105,7 @@ exports.loop = (message) => {
     {
         serverQueue.loop = false;
     }
+    return message.channel.send(`Queue looping set to ${serverQueue.loop}`);
 };
 
 exports.random = (message) => {
@@ -130,6 +131,7 @@ exports.random = (message) => {
     {
         serverQueue.random = false;
     }
+    return message.channel.send(`Song randomizing set to ${serverQueue.random}`);
 };
 
 exports.skip = (message) => {
