@@ -5,6 +5,8 @@ const play = require('./play.js');
 const disconnect = require('./disconnect.js');
 const skip = require('./skip.js');
 const stop = require('./stop.js');
+const queue = require('./queue.js');
+const remove = require('./remove.js');
 
 exports.help = {
     name: 'help',
@@ -30,6 +32,8 @@ comms.push(
     {name: `${play.help.name}`, description: `${play.help.description}`},
     {name: `${skip.help.name}`, description: `${skip.help.description}`},
     {name: `${stop.help.name}`, description: `${stop.help.description}`},
+    {name: `${queue.help.name}`, description: `${queue.help.description}`},
+    {name: `${remove.help.name}`, description: `${remove.help.description}`},
     {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
 );
 
