@@ -42,7 +42,7 @@ async function play(guild, song)
     {
         dispatcher.on("finish", () => {
             var i = 0;
-            var randomInt, temp;
+            var randomInt;
 
             serverQueue.songs.forEach(song => {
                 if(i > 0)
@@ -61,7 +61,7 @@ async function play(guild, song)
     {
         dispatcher.on("finish", () => {
             var i = 0;
-            var randomInt, temp;
+            var randomInt;
 
             serverQueue.songs.forEach(song => {
                 if(i > 0)
@@ -226,7 +226,7 @@ exports.randomize = (message) => {
     }
 
     var i = 0;
-    var randomInt, temp;
+    var randomInt;
 
     serverQueue.songs.forEach(song => {
         if(i > 0)
