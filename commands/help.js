@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Discord = require('discord.js');
 const fs = require('fs');
 const { config } = require('../bot');
@@ -8,6 +9,9 @@ const stop = require('./stop.js');
 const queue = require('./queue.js');
 const remove = require('./remove.js');
 const search = require('./search.js');
+const loop = require('./loop.js');
+const random = require('./random.js');
+const randomize = require('./randomize.js');
 
 exports.help = {
     name: 'help',
@@ -37,6 +41,9 @@ comms.push(
     {name: `${remove.help.name}`, description: `${remove.help.description}`},
     {name: `${search.help.name}`, description: `${search.help.description}`},
     {name: `${disconnect.help.name}`, description: `${disconnect.help.description}`},
+    {name: `${loop.help.name}`, description: `${loop.help.description}`},
+    {name: `${random.help.name}`, description: `${random.help.description}`},
+    {name: `${randomize.help.name}`, description: `${randomize.help.description}`},
 );
 
 comms.forEach(obj => {
