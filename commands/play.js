@@ -89,7 +89,7 @@ exports.queue = (message) => {
     serverQueue.songs.forEach(song => {
         if(i > 0)
         {
-            queueString += `${i}. ${song.title}\n`;
+            queueString += `${i}. \`${song.title}\`\n`;
         }
         else
         {

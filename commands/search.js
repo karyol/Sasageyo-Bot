@@ -19,7 +19,12 @@ exports.run = (bot, message, args) => {
         }
 
         resp += `\n**Choose a number beetween** \`1-${videos.length}\``;
-        message.channel.send(resp);
+
+        const respMessage = new Discord.MessageEmbed()
+            .setColor('#3d0099')
+            .setDescription(resp);
+
+        message.channel.send(respMessage);
 
         const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0;
         const collector = message.channel.createMessageCollector(filter);

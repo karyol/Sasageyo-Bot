@@ -40,7 +40,7 @@ comms.push(
 );
 
 comms.forEach(obj => {
-    commsString += config.prefix + obj.name + ' - ' + obj.description + '\n';
+    commsString += `**${config.prefix}${obj.name}** - ${obj.description}\n`;
 });
 
 const helpMessage = new Discord.MessageEmbed()
