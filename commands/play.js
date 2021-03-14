@@ -14,9 +14,14 @@ async function play(guild, song)
     const serverQueue = queue.get(guild.id);
     if(!song)
     {
-        serverQueue.voiceChannel.leave();
-        queue.delete(guild.id);
-        return;
+        setTimeout(() => {
+            if(!song)
+            {
+                serverQueue.voiceChannel.leave();
+                queue.delete(guild.id);
+                return;
+            }
+        }, 15 * 60 * 1000);
     }
 
     const dispatcher = serverQueue.connection
