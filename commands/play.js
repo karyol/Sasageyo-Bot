@@ -14,7 +14,7 @@ async function play(guild, song)
     const serverQueue = queue.get(guild.id);
     if(!song)
     {
-        setTimeout(() => {
+        setTimeout(async () => {
             if(!song)
             {
                 serverQueue.voiceChannel.leave();
@@ -178,7 +178,7 @@ exports.queue = (message) => {
 
     if(!serverQueue)
     {
-        return message.channel.send("Queue is empty.")
+        return message.channel.send("Queue is empty.");
     }
 
     var queueString = '';
@@ -196,6 +196,8 @@ exports.queue = (message) => {
         }
         i++;
     });
+
+    if(i == 0) return message.channel.send("Queue is empty.");
 
     const queueMessage = new Discord.MessageEmbed()
         .setColor('#990000')
