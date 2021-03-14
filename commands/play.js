@@ -8,24 +8,15 @@ exports.help = {
 };
 
 const queue = new Map();
-var timeout;
 
 async function play(guild, song)
 {
-    clearTimeout(timeout);
-    timeout = null;
-
     const serverQueue = queue.get(guild.id);
     if(!song)
     {
-        timeout = setTimeout(async () => {
-            if(serverQueue.songs.length == 0)
-            {
-                serverQueue.voiceChannel.leave();
-                queue.delete(guild.id);
-                return;
-            }
-        }, 15 * 1000);
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
     }
 
     const dispatcher = serverQueue.connection
@@ -337,8 +328,6 @@ exports.run = async (bot, message, args) => {
     else
     {
         serverQueue.songs.push(song);
-        clearTimeout(timeout);
-        timeout = null;
         return message.channel.send(`${song.title} has been added to the queue!`);
     }
 };
