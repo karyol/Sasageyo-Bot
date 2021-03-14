@@ -21,7 +21,7 @@ async function play(guild, song)
                 queue.delete(guild.id);
                 return;
             }
-        }, 15 * 60 * 1000);
+        }, 15 * 1000);
     }
 
     const dispatcher = serverQueue.connection
