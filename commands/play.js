@@ -15,7 +15,7 @@ async function play(guild, song)
     if(!song)
     {
         setTimeout(async () => {
-            if(!song)
+            if(serverQueue.songs.length == 0)
             {
                 serverQueue.voiceChannel.leave();
                 queue.delete(guild.id);
