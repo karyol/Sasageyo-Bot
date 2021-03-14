@@ -92,11 +92,6 @@ exports.loop = (message) => {
 
     const serverQueue = queue.get(message.guild.id);
 
-    if(!serverQueue)
-    {
-        return message.channel.send("Queue is empty.");
-    }
-
     if(!serverQueue.loop)
     {
         serverQueue.loop = true;
@@ -117,11 +112,6 @@ exports.random = (message) => {
     }
 
     const serverQueue = queue.get(message.guild.id);
-
-    if(!serverQueue)
-    {
-        return message.channel.send("Queue is empty.");
-    }
 
     if(!serverQueue.random)
     {
