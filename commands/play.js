@@ -8,13 +8,17 @@ exports.help = {
 };
 
 const queue = new Map();
+var timeout;
 
 async function play(guild, song)
 {
+    clearTimeout(timeout);
+    timeout = null;
+
     const serverQueue = queue.get(guild.id);
     if(!song)
     {
-        setTimeout(async () => {
+        timeout = setTimeout(async () => {
             if(serverQueue.songs.length == 0)
             {
                 serverQueue.voiceChannel.leave();
@@ -333,6 +337,8 @@ exports.run = async (bot, message, args) => {
     else
     {
         serverQueue.songs.push(song);
+        clearTimeout(timeout);
+        timeout = null;
         return message.channel.send(`${song.title} has been added to the queue!`);
     }
 };
