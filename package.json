@@ -12,7 +12,7 @@
     "discord.js": "^12.5.1",
     "enmap": "^5.8.4",
     "fs": "^0.0.1-security",
-    "yt-search": "^2.7.3",
+    "yt-search": "^2.10.4",
     "ytdl": "^1.4.1",
     "ytdl-core-discord": "^1.2.5"
   },
